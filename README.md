@@ -1,5 +1,5 @@
 # School-Project
  for school project
 
-### battle-skills
+### branch battle-skills
 - *sample* includes battle skills made in summer vacation.
