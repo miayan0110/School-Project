@@ -2,4 +2,4 @@
  for school project
 
 ### battle-skills
-- sample includes battle skills made in summer vacation.
+- *sample* includes battle skills made in summer vacation.
