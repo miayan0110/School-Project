@@ -6,7 +6,9 @@ public class ShootingController : MonoBehaviour
 {
     public GameObject knife;
     public GameObject laser;
-    public GameObject laserEnergyMode;
+    public GameObject laserEnergyBar;
+    public GameObject laserUI;
+    public GameObject explosion;
 
     public static GameObject target = null;
     public static bool isTargetDead = true;
@@ -15,15 +17,18 @@ public class ShootingController : MonoBehaviour
 
     LinkedList<string> shootingModeList = new LinkedList<string>();
     GameObject[] gos;
-    
+    SpriteRenderer playersr;
 
     void Start()
     {
         InitializingShootingMode();
+
+        playersr = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+
         //print("initial: " + isTargetDead);
     }
 
-    
+
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
@@ -34,7 +39,8 @@ public class ShootingController : MonoBehaviour
         switch (currentShootingMode)
         {
             case "Manual":
-                laserEnergyMode.SetActive(false);
+                laserEnergyBar.SetActive(false);
+                laserUI.SetActive(false);
                 Manual();
                 Shoot();
                 break;
@@ -50,8 +56,14 @@ public class ShootingController : MonoBehaviour
                 Multiple();
                 break;
             case "Laser":
-                laserEnergyMode.SetActive(true);
+                laserEnergyBar.SetActive(true);
+                laserUI.SetActive(true);
                 Laser();
+                break;
+            case "Explosion":
+                laserEnergyBar.SetActive(false);
+                laserUI.SetActive(false);
+                Explosion();
                 break;
             default:
                 Manual();
@@ -67,6 +79,7 @@ public class ShootingController : MonoBehaviour
         shootingModeList.AddAfter(shootingModeList.Find("Auto"), "Auto Track");
         shootingModeList.AddAfter(shootingModeList.Find("Auto Track"), "Multiple");
         shootingModeList.AddAfter(shootingModeList.Find("Multiple"), "Laser");
+        shootingModeList.AddAfter(shootingModeList.Find("Laser"), "Explosion");
     }
     
     public static string GetShootingMode()
@@ -149,6 +162,36 @@ public class ShootingController : MonoBehaviour
         {
             PlayerController.laserDestroy = false;
             Instantiate(laser, transform.position, Quaternion.Euler(new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z - 90)));
+        }
+    }
+
+    void Explosion()
+    {
+        float dirX = Input.GetAxis(PlayerController.HORIZONTAL);
+        float dirY = Input.GetAxis(PlayerController.VERTICAL);
+
+        Vector3 explorePositionX = new Vector3(1.0f, 0.0f, 0.0f);
+        Vector3 explorePositionY = new Vector3(0.0f, 1.0f, 0.0f);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            PlayerController.isExploded = false;
+            if (dirY < 0)
+            {
+                Instantiate(explosion, transform.position - explorePositionY, Quaternion.identity);
+            }
+            else if (dirY > 0)
+            {
+                Instantiate(explosion, transform.position + explorePositionY, Quaternion.identity);
+            }
+            else if (dirX < 0)
+            {
+                Instantiate(explosion, transform.position - explorePositionX, Quaternion.identity);
+            }
+            else if (dirX > 0)
+            {
+                Instantiate(explosion, transform.position + explorePositionX, Quaternion.identity);
+            }
         }
     }
 }

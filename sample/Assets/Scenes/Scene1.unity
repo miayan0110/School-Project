@@ -881,7 +881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b135124541705408434f173e2d91f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 5
+  playerSpeed: 1
 --- !u!61 &689875917
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1279,7 +1279,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knife: {fileID: 4186297646412687520, guid: 4c360abe9db688843b4ed62910101603, type: 3}
   laser: {fileID: 8231377499856573814, guid: 97d798ac389f38d4e8fa7525e325a820, type: 3}
-  laserEnergyMode: {fileID: 923906474}
+  laserEnergyBar: {fileID: 923906474}
+  laserUI: {fileID: 518899405}
+  explosion: {fileID: 7591386077015987224, guid: 9251adda4c459064faa1488357ad18b6, type: 3}
 --- !u!1 &1559471579
 GameObject:
   m_ObjectHideFlags: 0

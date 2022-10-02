@@ -7,26 +7,29 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed;
 
     public static bool laserDestroy = true;
-
-    string HORIZONTAL = "Horizontal";
-    string VERTICAL = "Vertical";
+    public static bool isExploded = true;
+    public static string HORIZONTAL = "Horizontal";
+    public static string VERTICAL = "Vertical";
 
     SpriteRenderer sr;
     Transform targetTrans;
+    Animator playerAni;
     
     void Start()
     {
         sr = this.gameObject.GetComponent<SpriteRenderer>();
         targetTrans = GameObject.Find("PlayerShootingController").GetComponent<Transform>();
+        playerAni = this.gameObject.GetComponent<Animator>();
     }
 
     
     void Update()
     {
-        if (laserDestroy || ShootingController.GetShootingMode() != "Laser")
+        if ((laserDestroy || ShootingController.GetShootingMode() != "Laser") && isExploded)
         {
             MoveByKeyboard();
         }
+        /*
         else
         {
             if (targetTrans.eulerAngles.z > 90.0f && targetTrans.eulerAngles.z < 270.0f)
@@ -38,7 +41,7 @@ public class PlayerController : MonoBehaviour
                 sr.flipX = false;
             }
         }
-
+        */
         //MoveByMouse();
     }
 
@@ -46,6 +49,22 @@ public class PlayerController : MonoBehaviour
     {
         float dirX = Input.GetAxis(HORIZONTAL);
         float dirY = Input.GetAxis(VERTICAL);
+        if (dirX != 0)
+        {
+            playerAni.SetBool("WalkingSide", true);
+            playerAni.SetTrigger("Side");
+            playerAni.ResetTrigger("Down");
+        }
+        else if (dirY != 0)
+        {
+            playerAni.ResetTrigger("Side");
+            playerAni.SetTrigger("Down");
+        }
+        else
+        {
+            playerAni.SetBool("WalkingSide", false);
+        }
+
         if (dirX < 0)
         {
             sr.flipX = true;
@@ -54,6 +73,16 @@ public class PlayerController : MonoBehaviour
         {
             sr.flipX = false;
         }
+
+        if (dirY < 0)
+        {
+            playerAni.SetBool("WalkingDown", true);
+        }
+        else
+        {
+            playerAni.SetBool("WalkingDown", false);
+        }
+
         this.gameObject.transform.position += new Vector3(dirX * playerSpeed * Time.deltaTime, 0f, 0f);
         this.gameObject.transform.position += new Vector3(0f, dirY * playerSpeed * Time.deltaTime, 0f);
     }
