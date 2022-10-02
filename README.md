@@ -2,4 +2,4 @@
  for school project
 
 ### branch battle-skills
-- *sample* includes battle skills
+- *sample* includes trials of battle skills.
