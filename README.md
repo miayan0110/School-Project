@@ -1,5 +1,5 @@
 # School-Project
  for school project
 
-### branche template
+### branch template
 - template of project
