@@ -3,3 +3,4 @@
 
 ### branches
 - battle-skills
+- template
