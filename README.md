@@ -1,5 +1,5 @@
 # School-Project
  for school project
 
-### branches
-- battle-skills
+### branche template
+- template of project
