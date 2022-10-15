@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SkillBoard : MonoBehaviour
 {
-    public GameObject playerSkillOnEnemy;
+    public GameObject skillEffectOnEnemy;
 
     Transform playerTR;
     Image myIM;
@@ -15,7 +15,6 @@ public class SkillBoard : MonoBehaviour
     {
         playerTR = GameObject.Find("Player").GetComponent<Transform>();
         myIM = this.gameObject.GetComponent<Image>();
-        skillAnim = playerSkillOnEnemy.GetComponent<Animator>();
     }
 
     void Update()
@@ -25,26 +24,33 @@ public class SkillBoard : MonoBehaviour
 
     public void Skill()
     {
-        Instantiate(playerSkillOnEnemy, playerTR.position, Quaternion.identity);
-        StartCoroutine("Delete");
-        //StartCoroutine("PlaySkill");
-        /*
-        if (playerSkillOnEnemy.activeInHierarchy && skillAnim.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+        if (SkillMask.energyIsFull)
         {
-            playerSkillOnEnemy.SetActive(false);
+            Instantiate(skillEffectOnEnemy, playerTR.position, Quaternion.identity);
+            if (GameObject.Find("SkillEffectOnEnemy(Clone)") != null)
+            {
+                skillAnim = GameObject.Find("SkillEffectOnEnemy(Clone)").GetComponent<Animator>();
+            }
         }
-        */
+        StartCoroutine("PlaySkill");
     }
 
     IEnumerator PlaySkill()
     {
         yield return null;
+        skillAnim.SetBool("AreaBuffOn", true);
+        
+        yield return null;
         skillAnim.Play(myIM.sprite.name);
+
+        yield return null;
+        StartCoroutine("Delete");
     }
 
     IEnumerator Delete()
     {
         yield return new WaitForSeconds(2.0f);
-        Destroy(GameObject.Find("PlayerSkillOnEnemy(Clone)"));
+        skillAnim.SetBool("AreaBuffOn", false);
+        Destroy(GameObject.Find("SkillEffectOnEnemy(Clone)"));
     }
 }
