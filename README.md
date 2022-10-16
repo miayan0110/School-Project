@@ -6,4 +6,5 @@
 
 #### progress
 - 2022/10/16
-[!](../../OBS%20outputFiles/20221016.mp4)
+
+[![Watch the video]](../../OBS%20outputFiles/20221016.mp4)
