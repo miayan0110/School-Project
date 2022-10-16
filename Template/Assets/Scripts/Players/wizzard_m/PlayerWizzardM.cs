@@ -22,11 +22,15 @@ public class PlayerWizzardM : MonoBehaviour
 
     void Update()
     {
+        if (playerAni.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+        {
+            isAttacking = false;
+        }
+
         if (!isAttacking)
         {
             MoveByWSAD();
         }
-        Attack();
     }
 
     void MoveByWSAD()
@@ -56,20 +60,10 @@ public class PlayerWizzardM : MonoBehaviour
         }
     }
 
-    void Attack()
+    public void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isAttacking = true;
-            playerAni.Play("Base Layer.hit");
-            skillAni.Play("Base Layer.ice");
-        }
-
-        
-        if (playerAni.GetCurrentAnimatorStateInfo(0).IsName("idle"))
-        {
-            isAttacking = false;
-        }
-        
+        isAttacking = true;
+        playerAni.Play("Base Layer.hit");
+        skillAni.Play("Base Layer.ice");
     }
 }

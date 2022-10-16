@@ -7,13 +7,13 @@ public class SkillBoard : MonoBehaviour
 {
     public GameObject skillEffectOnEnemy;
 
-    Transform playerTR;
+    Transform targetTR;
     Image myIM;
     Animator skillAnim;
 
     void Start()
     {
-        playerTR = GameObject.Find("Player").GetComponent<Transform>();
+        targetTR = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Transform>();
         myIM = this.gameObject.GetComponent<Image>();
     }
 
@@ -26,7 +26,7 @@ public class SkillBoard : MonoBehaviour
     {
         if (SkillMask.energyIsFull)
         {
-            Instantiate(skillEffectOnEnemy, playerTR.position, Quaternion.identity);
+            Instantiate(skillEffectOnEnemy, targetTR.position, Quaternion.identity);
             if (GameObject.Find("SkillEffectOnEnemy(Clone)") != null)
             {
                 skillAnim = GameObject.Find("SkillEffectOnEnemy(Clone)").GetComponent<Animator>();
